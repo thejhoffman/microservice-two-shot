@@ -31,8 +31,8 @@ def api_list_shoes(request):
     if request.method == "GET":
         shoes = Shoe.objects.all()
         return JsonResponse(
-            { "shoes":shoes},
-            encoder=ShoeListEncoder
+            {"shoes": shoes},
+            encoder=ShoeListEncoder,
             )
     else:
         content = json.loads(request.body)
@@ -45,8 +45,9 @@ def api_list_shoes(request):
                 {"message": "Invalid bin"},
                 status=400,
             )
+        shoe = Shoe.objects.create(**content)
         return JsonResponse(
-            shoes,
+            shoe,
             encoder = ShoeDetailEncoder,
             safe = False,
             )
