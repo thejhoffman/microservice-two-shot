@@ -1,17 +1,105 @@
-# from django.http import JsonResponse
+from django.http import JsonResponse
 from django.views.decorators.http import require_http_methods
+import json
 
-# import json
+from common.json import ModelEncoder
+from .models import Hat, LocationVO
 
-# import encoders
-# import models
+
+class LocationVOEncoder(ModelEncoder):
+    model = LocationVO
+    properties = [
+        "name",
+        "import_href",
+    ]
+
+
+class HatEncoder(ModelEncoder):
+    model = Hat
+    properties = [
+        "name",
+        "description",
+        "location",
+    ]
+    encoders = {
+        "location": LocationVOEncoder(),
+    }
 
 
 @require_http_methods(["GET", "POST"])
 def api_hats(request):
-    pass
+    if request.method == "GET":
+        hats = Hat.objects.all()
+        return JsonResponse(
+            {"hats": hats},
+            encoder=HatEncoder,
+        )
+    else:
+        try:
+            content = json.loads(request.body)
+            location_href = content["location"]
+            content["location"] = LocationVO.objects.get(import_href=location_href)
+            hat = Hat.objects.create(**content)
+        except LocationVO.DoesNotExist:
+            response = JsonResponse({"message": "Location does not exist"})
+            response.status_code = 404
+            return response
+        return JsonResponse(
+            hat,
+            encoder=HatEncoder,
+            safe=False,
+        )
 
 
 @require_http_methods(["GET", "PUT", "DELETE"])
 def api_hat(request, pk):
-    pass
+    if request.method == "GET":
+        try:
+            hat = Hat.objects.get(id=pk)
+            return JsonResponse(hat, encoder=HatEncoder, safe=False)
+        except Hat.DoesNotExist:
+            response = JsonResponse({"message": "Does not exist"})
+            response.status_code = 404
+            return response
+    elif request.method == "DELETE":
+        try:
+            hat = Hat.objects.get(id=pk)
+            hat.delete()
+            return JsonResponse(
+                hat,
+                encoder=HatEncoder,
+                safe=False,
+            )
+        except Hat.DoesNotExist:
+            response = JsonResponse({"message": "Does not exist"})
+            response.status_code = 404
+            return response
+    else:  # PUT
+        try:
+            content = json.loads(request.body)
+            hat = Hat.objects.get(id=pk)
+
+            props = ["name", "description", "location"]
+            for prop in props:
+                if prop in content:
+                    if prop == "location":
+                        location = LocationVO.objects.get(
+                            import_href=content["location"]
+                        )
+                        setattr(hat, prop, location)
+                    else:
+                        setattr(hat, prop, content[prop])
+            hat.save()
+            return JsonResponse(
+                hat,
+                encoder=HatEncoder,
+                safe=False,
+            )
+        except Hat.DoesNotExist:
+            response = JsonResponse({"message": "Does not exist"})
+            response.status_code = 404
+            return response
+        except LocationVO.DoesNotExist:
+            response = JsonResponse({"message": "Location does not exist"})
+            response.status_code = 404
+            return response
