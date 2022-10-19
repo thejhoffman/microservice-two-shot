@@ -8,8 +8,10 @@ class LocationVO(models.Model):
 
 
 class Hat(models.Model):
-    name = models.CharField(max_length=100)
-    description = models.TextField()
+    fabric = models.CharField(max_length=100)
+    style_name = models.CharField(max_length=100)
+    color = models.CharField(max_length=100)
+    picture_url = models.URLField(null=True)
     location = models.ForeignKey(
         LocationVO,
         related_name="hats",

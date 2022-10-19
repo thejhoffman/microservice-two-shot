@@ -17,8 +17,9 @@ class LocationVOEncoder(ModelEncoder):
 class HatEncoder(ModelEncoder):
     model = Hat
     properties = [
-        "name",
-        "description",
+        "style_name",
+        "fabric",
+        "color",
         "location",
     ]
     encoders = {
@@ -79,7 +80,7 @@ def api_hat(request, pk):
             content = json.loads(request.body)
             hat = Hat.objects.get(id=pk)
 
-            props = ["name", "description", "location"]
+            props = ["style_name", "fabric", "color", "location"]
             for prop in props:
                 if prop in content:
                     if prop == "location":
