@@ -14,12 +14,24 @@ class LocationVOEncoder(ModelEncoder):
     ]
 
 
-class HatEncoder(ModelEncoder):
+class HatListEncoder(ModelEncoder):
+    model = Hat
+    properties = [
+        "style_name",
+        "location",
+    ]
+    encoders = {
+        "location": LocationVOEncoder(),
+    }
+
+
+class HatDetailEncoder(ModelEncoder):
     model = Hat
     properties = [
         "style_name",
         "fabric",
         "color",
+        "picture_url",
         "location",
     ]
     encoders = {
@@ -33,7 +45,7 @@ def api_hats(request):
         hats = Hat.objects.all()
         return JsonResponse(
             {"hats": hats},
-            encoder=HatEncoder,
+            encoder=HatListEncoder,
         )
     else:
         try:
@@ -47,7 +59,7 @@ def api_hats(request):
             return response
         return JsonResponse(
             hat,
-            encoder=HatEncoder,
+            encoder=HatDetailEncoder,
             safe=False,
         )
 
@@ -57,7 +69,11 @@ def api_hat(request, pk):
     if request.method == "GET":
         try:
             hat = Hat.objects.get(id=pk)
-            return JsonResponse(hat, encoder=HatEncoder, safe=False)
+            return JsonResponse(
+                hat,
+                encoder=HatDetailEncoder,
+                safe=False,
+            )
         except Hat.DoesNotExist:
             response = JsonResponse({"message": "Does not exist"})
             response.status_code = 404
@@ -68,7 +84,7 @@ def api_hat(request, pk):
             hat.delete()
             return JsonResponse(
                 hat,
-                encoder=HatEncoder,
+                encoder=HatDetailEncoder,
                 safe=False,
             )
         except Hat.DoesNotExist:
@@ -93,7 +109,7 @@ def api_hat(request, pk):
             hat.save()
             return JsonResponse(
                 hat,
-                encoder=HatEncoder,
+                encoder=HatDetailEncoder,
                 safe=False,
             )
         except Hat.DoesNotExist:
