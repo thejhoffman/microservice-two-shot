@@ -29,8 +29,38 @@ class ShoeListEncoder(ModelEncoder):
 @require_http_methods(["GET", "POST"])
 def api_list_shoes(request):
     if request.method == "GET":
-            shoes = Shoe.objects.all()
+        shoes = Shoe.objects.all()
+        return JsonResponse(
+            { "shoes":shoes},
+            encoder=ShoeListEncoder
+            )
+    else:
+        content = json.loads(request.body)
+        try:
+            bin_href = content["bin"]
+            bin = BinVO.objects.get(import_href=bin_href)
+            content["bin"] = bin
+        except BinVO.DoesNotExist:
             return JsonResponse(
-                { "shoes":shoes},
-                encoder=ShoeListEncoder
-                )
+                {"message": "Invalid bin"},
+                status=400,
+            )
+        return JsonResponse(
+            shoes,
+            encoder = ShoeDetailEncoder,
+            safe = False,
+            )
+
+
+@require_http_methods(["GET", "PUT", "DELETE"])
+def api_show_shoe(request, pk):
+    if request.method == "GET":
+        shoes = Shoe.objects.get(id=pk)
+        return JsonResponse(
+            shoes,
+            encoder=ShoeDetailEncoder,
+            safe=False,
+        )
+    elif request.method == "DELETE":
+        count, _ = Shoe.objects.filter(id=pk).delete()
+        return JsonResponse({"deleted": count > 0})
