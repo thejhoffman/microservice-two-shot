@@ -2,8 +2,8 @@
 
 Team:
 
-* Person 1 - Which microservice?
-* Person 2 - Which microservice?
+* James Hoffman - Which microservice? - Hats
+* Micheline Doughlin - Which microservice? - Shoes
 
 ## Design
 
