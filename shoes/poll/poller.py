@@ -18,7 +18,7 @@ def poll():
     while True:
         print('Shoes poller polling for data')
         try:
-            url = 'http://wardrpbe-api:8000/api/bins'
+            url = 'http://wardrobe-api:8000/api/bins/'
             response = requests.get(url)
             content = json.loads(response.content)
             for bin in content["bins"]:
