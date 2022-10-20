@@ -6,6 +6,7 @@ class ShoeList extends React.Component {
         this.state = {
             shoes: [],
         };
+        this.handleDeleteShoe = this.handleDeleteShoe.bind(this);
     }
    async componentDidMount() {
     const url = 'http://localhost:8080/api/shoes/';
@@ -17,6 +18,21 @@ class ShoeList extends React.Component {
         this.setState({shoes: data.shoes})
     }
    }
+   async handleDeleteShoe(event) {
+    const shoeId = event.target.value
+    const deleteUrl = `http://localhost:8080/api/shoes/${shoeId}`
+
+    const fetchConfig = {
+        method: "delete",
+
+
+    };
+    const response = await fetch(deleteUrl, fetchConfig);
+    if (response.ok){
+        window.location.reload(true)
+    };
+}
+
    render (){
     return (
         <div className="container">
@@ -33,6 +49,7 @@ class ShoeList extends React.Component {
                             <tr key={shoe.id}>
                                 <td>{ shoe.manufacturer}</td>
                                 <td>{ shoe.model_name }</td>
+                                <td><button onClick={this.handleDeleteShoe} value={shoe.id}></button>Delete</td>
                             </tr>
                         );
                     })}

@@ -23,7 +23,7 @@ class ShoeDetailEncoder(ModelEncoder):
 
 class ShoeListEncoder(ModelEncoder):
     model = Shoe
-    properties =["manufacturer", "model_name", "color"]
+    properties =["id", "manufacturer", "model_name", "color"]
 
 
 @require_http_methods(["GET", "POST"])
