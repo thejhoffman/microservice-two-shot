@@ -95,7 +95,7 @@ class ShoeForm extends React.Component {
                 <label htmlFor="color">Color</label>
             </div>
             <div className='form-floating mb-3'>
-                <input value={this.state.imgUrl} onChange={this.handleImgUrlChange} required placeholder="picture" type="text" id="picture_url" name="picture_url" className='form-control' />
+                <input value={this.state.imgUrl} onChange={this.handlePictureUrlChange} required placeholder="picture" type="text" id="picture_url" name="picture_url" className='form-control' />
                 <label htmlFor="imgUrl">Picture</label>
             </div>
             <div className="mb-3">
