@@ -28,11 +28,8 @@ class ShoeForm extends React.Component {
 
         const shoeUrl = 'http://localhost:8080/api/shoes/'
         const fetchConfig = {
-            method: 'POST',
-            body: JSON.stringify(data),
-            headers: {
-                'Content-Type': 'application/json',
-            },
+            method: 'DELETE',
+
         };
         const response = await fetch(shoeUrl, fetchConfig);
         if (response.ok) {
