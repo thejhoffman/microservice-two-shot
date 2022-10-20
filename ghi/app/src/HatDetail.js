@@ -48,6 +48,10 @@ class HatDetail extends React.Component {
 
   }
 
+  addDefaultSrc(ev) {
+    ev.target.src = 'https://thumbs.dreamstime.com/b/no-image-available-icon-flat-vector-no-image-available-icon-flat-vector-illustration-132482953.jpg';
+  }
+
   render() {
     const hat = this.state.hat;
     const location = this.state.location;
@@ -59,7 +63,7 @@ class HatDetail extends React.Component {
       <div className=" container my-5">
         <div className={"row" + (this.state.isDeleted ? " d-none" : "")}>
           <div className="col col-sm-auto">
-            <img className="bg-white rounded shadow d-block mx-auto mb-4" src={hat.picture_url} width="300" alt="logo" />
+            <img onError={this.addDefaultSrc} className="bg-white rounded shadow d-block mx-auto mb-4" src={hat.picture_url} width="300" alt="logo" />
           </div>
           <div className="col">
             <div className="card mb-3 shadow">

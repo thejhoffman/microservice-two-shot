@@ -9,10 +9,14 @@ const CreateColumn = (props) => {
   );
 };
 
+const addDefaultSrc = (event) => {
+  event.target.src = 'https://thumbs.dreamstime.com/b/no-image-available-icon-flat-vector-no-image-available-icon-flat-vector-illustration-132482953.jpg';
+};
+
 const CreateCard = (props) => {
   return (
     <div className="card mb-3 shadow text-center" style={{ width: '18rem' }}>
-      <img src={props.hat.picture_url} className="card-img-top" alt="hat" />
+      <img onError={addDefaultSrc} src={props.hat.picture_url} className="card-img-top" alt="hat" />
       <div className="card-body">
         <h5 className="card-title">{props.hat.style_name}</h5>
         <h6 className="card-subtitle mb-2 text-muted">{props.hat.location.name}</h6>
