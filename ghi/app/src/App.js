@@ -21,6 +21,7 @@ function App() {
           <Route path="hats/new" element={<HatForm />} />
         </Routes>
       </div>
+    </BrowserRouter>
   );
 }
 
