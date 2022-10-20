@@ -110,6 +110,7 @@ class ShoeForm extends React.Component {
                     })}
                 </select>
             </div>
+            <button className="btn btn-primary">Submit</button>
             </form>
             </div>
             </div>
