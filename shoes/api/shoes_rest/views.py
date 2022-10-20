@@ -65,3 +65,20 @@ def api_show_shoe(request, pk):
     elif request.method == "DELETE":
         count, _ = Shoe.objects.filter(id=pk).delete()
         return JsonResponse({"deleted": count > 0})
+    else:
+        content = json.loads(request.body)
+        try:
+            bin = BinVO.objects.get(import_href=content["bin"])
+            content["bin"] = bin
+        except BinVO.DoesNotExist:
+            return JsonResponse(
+                {"message": "Invalid bin"},
+                status=400,
+            )
+        Shoe.objects.filter(id=pk).update(**content)
+        shoe = Shoe.objects.get(id=pk)
+        return JsonResponse(
+            shoe,
+            encoder=ShoeDetailEncoder,
+            safe=False,
+        )
