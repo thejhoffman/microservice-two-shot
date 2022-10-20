@@ -6,7 +6,7 @@ class ShoeForm extends React.Component {
         this.state = {
             bins: [],
             manufacturer: "",
-            model: "",
+            model_name: "",
             color: "",
             pictureUrl: "",
             bin: "",
@@ -38,7 +38,7 @@ class ShoeForm extends React.Component {
         if (response.ok) {
             const cleared = {
                 manufacturer: "",
-                model: "",
+                model_name: "",
                 color: "",
                 imgUrl: "",
                 bin: ""
@@ -53,7 +53,7 @@ class ShoeForm extends React.Component {
     }
     handleModelChange(event) {
         const value = event.target.value;
-        this.setState({ model: value })
+        this.setState({ model_name: value })
     }
     handleColorChange(event) {
         const value = event.target.value;
@@ -87,7 +87,7 @@ class ShoeForm extends React.Component {
                 <label htmlFor="manufacturer">Manufacturer</label>
             </div>
             <div className='form-floating mb-3'>
-                <input value={this.state.model} onChange={this.handleModelChange} required placeholder="model" type="text" id="model" name="model" className='form-control' />
+                <input value={this.state.model_name} onChange={this.handleModelChange} required placeholder="model_name" type="text" id="model_name" name="model_name" className='form-control' />
                 <label htmlFor="model">Model</label>
             </div>
             <div className='form-floating mb-3'>
@@ -95,7 +95,7 @@ class ShoeForm extends React.Component {
                 <label htmlFor="color">Color</label>
             </div>
             <div className='form-floating mb-3'>
-                <input value={this.state.imgUrl} onChange={this.handlePictureUrlChange} required placeholder="picture" type="text" id="picture_url" name="picture_url" className='form-control' />
+                <input value={this.state.pictureUrl} onChange={this.handlePictureUrlChange} required placeholder="picture" type="text" id="picture_url" name="picture_url" className='form-control' />
                 <label htmlFor="imgUrl">Picture</label>
             </div>
             <div className="mb-3">
