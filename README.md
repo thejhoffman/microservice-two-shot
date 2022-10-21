@@ -68,3 +68,30 @@ Functions:
     * `GET` (detail of a hat)
     * `POST` (updating a hat)
     * `DELETE` (deleting a hat)
+
+### `/hats/poll`
+
+#### poller.py
+Implemented logic for polling data from Wardrobe microservice in loading into LocationVO model
+
+### `/ghi/app/src`
+
+#### HatList.js
+Displays all of the hats in a card format with style name, image, and location. Includes a button to view details of a hat
+
+#### HatDetail.js
+Shows details of an individual hat. Include a button to delete the hat
+
+Data displayed for hat:
+* style name
+* image
+* fabric
+* color
+
+Data displayed for location hat is linked to:
+* closet name
+* section number
+* shelf number
+
+#### HatForm.js
+A form to handle the submission of adding a new hat
