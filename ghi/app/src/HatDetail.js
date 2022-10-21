@@ -61,40 +61,7 @@ class HatDetail extends React.Component {
 
     return (
       <div className=" container my-5">
-        <div className={"row" + (this.state.isDeleted ? " d-none" : "")}>
-          <div className="col col-sm-auto">
-            <img onError={this.addDefaultSrc} className="bg-white rounded shadow d-block mx-auto mb-4" src={hat.picture_url} width="300" alt="logo" />
-          </div>
-          <div className="col">
-            <div className="card mb-3 shadow">
-              <div className="card-header">
-                <h5 className="card-title">{hat.style_name}</h5>
-              </div>
-              <ul className="list-group list-group-flush">
-                <li className="list-group-item">Fabric: {hat.fabric}</li>
-                <li className="list-group-item">Color: {hat.color}</li>
-              </ul>
-              <div className="card-body">
-                <div className="btn btn-primary">See Details</div>
-              </div>
-            </div>
-          </div>
-          <div className="col">
-            <div className="card mb-3 shadow">
-              <div className="card-header">
-                <h5 className="card-title">{location.closet_name}</h5>
-              </div>
-              <ul className="list-group list-group-flush">
-                <li className="list-group-item">Section #{location.section_number}</li>
-                <li className="list-group-item">Shelf #{location.shelf_number}</li>
-              </ul>
-              <div className="card-body">
-                <div className="btn btn-primary">See Details</div>
-              </div>
-            </div>
-          </div>
-        </div >
-        <div className="row justify-content-center">
+        <div className="row justify-content-center m-4">
           <div className="col col-sm-auto">
             <form onSubmit={this.handleSubmit} className={(this.state.isDeleted ? " d-none" : "")} id="add-hat-form">
               <button className="btn btn-danger" style={{ width: '5rem' }}>Delete</button>
@@ -108,6 +75,33 @@ class HatDetail extends React.Component {
             </div>
           </div>
         </div>
+        <div className={"row" + (this.state.isDeleted ? " d-none" : "")}>
+          <div className="col col-sm-auto">
+            <img onError={this.addDefaultSrc} className="bg-white rounded shadow d-block mx-auto mb-4" src={hat.picture_url} width="300" alt="logo" />
+          </div>
+          <div className="col">
+            <div className="card mb-3 shadow">
+              <div className="card-header">
+                <h5 className="card-title">{hat.style_name}</h5>
+              </div>
+              <ul className="list-group list-group-flush">
+                <li className="list-group-item">Fabric: {hat.fabric}</li>
+                <li className="list-group-item">Color: {hat.color}</li>
+              </ul>
+            </div>
+          </div>
+          <div className="col">
+            <div className="card mb-3 shadow">
+              <div className="card-header">
+                <h5 className="card-title">{location.closet_name}</h5>
+              </div>
+              <ul className="list-group list-group-flush">
+                <li className="list-group-item">Section #{location.section_number}</li>
+                <li className="list-group-item">Shelf #{location.shelf_number}</li>
+              </ul>
+            </div>
+          </div>
+        </div >
       </div >
     );
   }
